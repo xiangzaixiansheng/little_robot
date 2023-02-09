@@ -6,12 +6,7 @@ import (
 )
 
 const (
-	//RankKey 每日排名
-	RankKey = "rank"
-	//BookRank 图书排名
-	BookRank = "BookRank"
-	//Camera 相机排名
-	CameraRank = "CameraRank"
+	USER_KEY = "wechat:login:xiangzai"
 )
 
 //获取rediskey

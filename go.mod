@@ -34,6 +34,7 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.26.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
+	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/net v0.5.0 // indirect
@@ -46,6 +47,7 @@ require (
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/eatmoreapple/openwechat v1.3.9
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.9.0
 	gopkg.in/yaml.v3 v3.0.1 // indirect

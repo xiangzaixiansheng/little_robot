@@ -29,7 +29,7 @@ var once sync.Once
 var RedisClient *MyRedis = new(MyRedis)
 
 // 封装 redis 实例，提供获取
-func GetInstance() *MyRedis {
+func GetRedisInstance() *MyRedis {
 	return RedisClient
 }
 
@@ -54,11 +54,15 @@ func NewRedis(RedisAddr string, RedisDbName string, RedisPw string) *redis.Clien
 	return myRedis
 }
 
-func (mr *MyRedis) Set(key string, value interface{}, ttl time.Duration) {
-	mr.Client.Set(key, value, ttl)
+func (mr *MyRedis) Set(key string, value interface{}, ttl time.Duration) (string, error) {
+	return mr.Client.Set(key, value, ttl).Result()
 }
-func (mr MyRedis) Get(key string) *redis.StringCmd {
-	return mr.Client.Get(key)
+func (mr MyRedis) Get(key string) (string, error) {
+	return mr.Client.Get(key).Result()
+}
+
+func (mr *MyRedis) Del(key string) (int64, error) {
+	return mr.Client.Del(key).Result()
 }
 
 func (mr MyRedis) Incr(key string) interface{} {
@@ -111,7 +115,7 @@ func (mr *MyRedis) AllowIp(param *RateLimit) bool {
 
 // package user
 // func getUser() {
-//     result := cache.GetInstance().Exist("user_001")
+//     result := db.GetRedisInstance().Exist("user_001")
 //     if !result {
 //         fmt.Println("不存在该数据")
 //     }
