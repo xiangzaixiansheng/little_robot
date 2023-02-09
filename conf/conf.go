@@ -7,7 +7,6 @@ import (
 
 	"os"
 
-	logging "github.com/sirupsen/logrus"
 	"gopkg.in/ini.v1"
 )
 
@@ -25,12 +24,12 @@ var (
 
 func Init() {
 	//env
-	if _env := os.Getenv("ENV"); _env != "" {
-		ENV = _env
-	} else {
+	if _env, exist := os.LookupEnv("ENV"); !exist {
 		ENV = "dev"
+	} else {
+		ENV = _env
 	}
-	fmt.Println("环境变量是", ENV)
+	util.LogrusObj.Infoln("环境变量是", ENV)
 	configFilePath := fmt.Sprintf("./conf/app.%s.ini", ENV)
 
 	file, err := ini.Load(configFilePath)
@@ -40,7 +39,7 @@ func Init() {
 	LoadServer(file)
 	LoadRedisData(file)
 	if err := LoadLocales("conf/locales/zh-cn.yaml"); err != nil {
-		logging.Info(err) //日志内容
+		util.LogrusObj.Infoln(err) //日志内容
 		panic(err)
 	}
 	//redis

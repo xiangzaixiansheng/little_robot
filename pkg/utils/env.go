@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-// GetEnvVal 从环境变量获取字符串类型值
 func GetEnvVal(key, defaultVal string) string {
+	//os.Getenv() 将返回一个空字符串，使用 LookupEnv 来区分空值和未设置值。
 	val, exist := os.LookupEnv(key)
 	if !exist {
 		return defaultVal
@@ -14,7 +14,6 @@ func GetEnvVal(key, defaultVal string) string {
 	return val
 }
 
-// GetEnvIntVal 从环境变量获取数字类型值
 func GetEnvIntVal(key string, defaultVal int) int {
 	valStr, exist := os.LookupEnv(key)
 	if !exist {
@@ -27,7 +26,6 @@ func GetEnvIntVal(key string, defaultVal int) int {
 	return val
 }
 
-// GetEnvBoolVal 从环境变量获取数字类型值
 func GetEnvBoolVal(key string, defaultVal bool) bool {
 	valStr, exist := os.LookupEnv(key)
 	if !exist {
