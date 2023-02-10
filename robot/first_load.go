@@ -12,6 +12,7 @@ import (
 )
 
 func First_load() {
+	//当前用户的key 默认只能登陆一个用户
 	key := cache.USER_KEY
 	//先查询redis中是否有缓存的key
 	loadInfo, error := GetRedisInstance().Get(cache.USER_KEY)
@@ -19,10 +20,11 @@ func First_load() {
 		util.LogrusObj.Errorln("first_load 获取rediskey失败")
 	}
 	util.LogrusObj.Infof("[%v]缓存的用户信息是", loadInfo)
+	//直接登陆
+	bot := InitWechatBot()
 	//加载缓存登陆
-	if loadInfo != "" {
+	if len(loadInfo) > 0 && loadInfo != "" {
 		util.LogrusObj.Debugf("当前登陆的用户key: %v", key)
-		bot := InitWechatBot()
 		storage := cache.NewRedisHotReloadStorage(key)
 		if err := bot.HotLogin(storage, openwechat.HotLoginWithRetry(false)); err != nil {
 			util.LogrusObj.Infof("[%v] 热登录失败，错误信息：%v", key, err.Error())
@@ -33,11 +35,11 @@ func First_load() {
 		}
 		loginUser, _ := bot.GetCurrentUser()
 		util.LogrusObj.Infof("[%v]初始化自动登录成功，用户名：%v", key, loginUser.NickName)
+		cache.SetBot(key, bot)
 
 	} else {
-		util.LogrusObj.Infof("没有缓存的数据=====第一次登陆")
 		//直接登陆
-		bot := InitWechatBot()
+		util.LogrusObj.Infof("没有缓存的数据=====第一次登陆")
 		bot.ScanCallBack = func(body openwechat.CheckLoginResponse) {
 			util.LogrusObj.Infof("已扫码")
 		}
@@ -87,6 +89,12 @@ func First_load() {
 			return
 		}
 		util.LogrusObj.Infof("当前登录用户：%v", user.NickName)
+		cache.SetBot(key, bot)
 	}
+
+	//加载用户关系到map中
+	self, _ := bot.GetCurrentUser()  // 获取登录用户
+	friends, _ := self.Friends(true) // 查找指定的好友
+	cache.SetFriendsMap(friends)
 
 }

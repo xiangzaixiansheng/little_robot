@@ -1,6 +1,7 @@
 package util
 
 import (
+	"io"
 	"log"
 	"os"
 	"path"
@@ -20,15 +21,19 @@ func init() {
 	}
 	//实例化
 	logger := logrus.New()
-	src, _ := setOutputFile()
-	//设置输出
-	logger.Out = src
+	writer1_file, _ := setOutputFile() //文件
+	writer2_console := os.Stdout       //终端
+
+	//同时写入终端和文件中
+	logger.SetOutput(io.MultiWriter(writer1_file, writer2_console))
 	//设置日志级别
 	logger.SetLevel(logrus.DebugLevel)
 	//设置日志格式
 	logger.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
+	//增加行号和文件名
+	logger.SetReportCaller(true)
 
 	/*
 		加个hook形成ELK体系
@@ -71,3 +76,19 @@ func setOutputFile() (*os.File, error) {
 	}
 	return src, nil
 }
+
+/*
+    log.Trace("Something very low level.")
+	log.Debug("Useful debugging information.")
+	log.Info("Something noteworthy happened!")
+	log.Warn("You should probably take a look at this.")
+	log.Error("Something failed but I'm not quitting.")
+	// Calls os.Exit(1) after logging
+	//log.Fatal("Bye.")
+	// Calls panic() after logging
+	log.Panic("I'm bailing.")
+
+	log.WithFields(log.Fields{
+		"animal": "dog", //增加字段打印
+	}).Info("dog is here")
+**/
