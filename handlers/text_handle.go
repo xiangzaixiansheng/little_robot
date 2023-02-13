@@ -17,7 +17,7 @@ func textHandler(ctx *openwechat.MessageContext) {
 		senderUser = fmt.Sprintf("%v[%v]", senderInGroup.NickName, senderUser)
 	}
 
-	util.LogrusObj.Infoln("[收到新文字消息] == 发信人：%v ==> 内容：%v", senderUser, ctx.Content)
+	util.LogrusObj.Infof("[收到新文字消息] == 发信人：%v ==> 内容：%v", senderUser, ctx.Content)
 	ctx.Next()
 
 }

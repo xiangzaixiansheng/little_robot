@@ -15,8 +15,8 @@ func First_load() {
 	//当前用户的key 默认只能登陆一个用户
 	key := cache.USER_KEY
 	//先查询redis中是否有缓存的key
-	loadInfo, error := GetRedisInstance().Get(cache.USER_KEY)
-	if error != nil {
+	loadInfo, err := GetRedisInstance().Get(cache.USER_KEY)
+	if err != nil {
 		util.LogrusObj.Errorln("first_load 获取rediskey失败")
 	}
 	util.LogrusObj.Infof("[%v]缓存的用户信息是", loadInfo)
