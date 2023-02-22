@@ -15,12 +15,10 @@ func main() {
 	}()
 	conf.Init()
 	r := routes.NewRouter()
-	util.LogrusObj.Infoln("走到这里了")
-
+	//===最近封禁比较多 先不登陆weixin
 	//初始化map
 	//InitGlobalWechatBotMap()
 	//首次登陆
 	//robot.First_load()
-
 	_ = r.Run(conf.HttpPort)
 }

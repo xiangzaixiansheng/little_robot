@@ -32,6 +32,7 @@ func NewRouter() *gin.Engine {
 
 		//获取图片
 		v1.GET("picture", api.GetPicture)
+		v1.POST("postpicture", api.PostPicture)
 
 		//增加jwt验证
 		authed := v1.Group("/")
