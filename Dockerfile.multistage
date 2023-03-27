@@ -16,7 +16,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /little_robot
 ##
 ## Deploy
 ##
-FROM scratch
+# 注意 FROM scratch 里面没有/bin/bashs
+# FROM scratch
+FROM registry.cn-hangzhou.aliyuncs.com/hanxiang/golang_basic
 
 WORKDIR /app
 
@@ -24,6 +26,8 @@ COPY --from=build /little_robot ../little_robot
 # 主要是把配置文件啥的拷贝过来
 COPY --from=build /app ./
 
+# 修改时区
+RUN ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 EXPOSE 3000
 
