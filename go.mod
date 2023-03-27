@@ -45,6 +45,7 @@ require (
 )
 
 require (
+	github.com/6tail/lunar-go v1.3.2
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.6+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eatmoreapple/openwechat v1.3.9

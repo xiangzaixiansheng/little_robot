@@ -5,8 +5,15 @@ import (
 	"little_robot/conf"
 	util "little_robot/pkg/utils"
 	"little_robot/routes"
+	_ "little_robot/tasks"
+	"os"
 	"time"
 )
+
+func init() {
+	hookUrl := os.Getenv("HOOK_URL")
+	util.LogrusObj.Infof("[INFO]发送企业微信提醒的hookurl: %v", hookUrl)
+}
 
 func main() {
 	begin := time.Now()

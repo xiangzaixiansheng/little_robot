@@ -2,7 +2,6 @@ package conf
 
 import (
 	"fmt"
-	"little_robot/db"
 	util "little_robot/pkg/utils"
 
 	"os"
@@ -44,7 +43,8 @@ func Init() {
 	}
 	//redis
 	util.LogrusObj.Infoln("[redis]init RedisAddr", RedisAddr, "RedisDbName", RedisDbName)
-	db.NewRedis(RedisAddr, RedisDbName, "")
+	//暂时不使用redis 2023-03-27
+	//db.NewRedis(RedisAddr, RedisDbName, "")
 }
 
 func LoadServer(file *ini.File) {
