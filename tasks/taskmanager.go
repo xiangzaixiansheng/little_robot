@@ -23,12 +23,12 @@ func (t Job1) Run() {
 
 	content := ""
 	if isWeekend {
-		content += fmt.Sprintf("今天是周末啦! 假期愉快 好好休息哦 \n")
+		content += fmt.Sprintf("今天是周末啦! 假期愉快 好好休息哦 ♥️\n")
 	} else {
 		content += fmt.Sprintf("又是新的一天❤️, 距离周末还有 %d 天 \n", days)
 	}
 	if holiday != "" {
-		content += fmt.Sprintf("距离最近的法定假期是 %v, 还有 %d 天😊 \n", holiday, days)
+		content += fmt.Sprintf("距离最近的法定假期是 %v, 还有 %d 天😊 \n", holiday, days2)
 	}
 
 	send_util.SendMsg(content)
@@ -45,7 +45,7 @@ func (t Job2) Run() {
 		return
 	}
 
-	content := fmt.Sprintf("小猪猪 喝水提醒 \n %v", time.Now())
+	content := fmt.Sprintf("小猪猪 喝水提醒 💧💧💧 \n %v", time.Now().Format("2006-01-02 15:04:05"))
 	send_util.SendMsg(content)
 	util.LogrusObj.Infoln("[INFO]task 喝水提醒: %s", content)
 }
